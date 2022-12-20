@@ -1,0 +1,69 @@
+<style>
+    .main {
+        width: 425px;
+        height: 500px;
+        margin: auto;
+        margin-top: 50px;
+    }
+
+    .imgdiv {
+        height: 100%;
+        width: 100%;
+    }
+
+</style>
+
+
+{% extends "store/base.html" %}
+{% load tshirt_tags %}
+{% block content %}
+
+<div class="row border">
+    <div class="col-4">
+        <div class="border main">
+            <div>
+                <img src="{{tshirt.image.url}}" class="imgdiv">
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="p-3 m-4 text-center">
+            <div class="display-4">{{tshirt.name}}</div>
+            <hr>
+        </div>
+        <div style="width: 500px; margin-left:180px;">
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste eveniet explicabo, voluptatum alias quis
+                quos omnis dicta rem architecto quasi quam sit, harum dolor obcaecati vel non possimus nisi quaerat?</p>
+            <div class="row ">
+                <div class="col-10">
+                    <label for="">
+                        <h4>Select Size </h4>
+                    </label>
+                    <div class="row mt-3">
+                        {% for size in tshirt.sizevarient_set.all %}
+                        <div class="col">
+                            <a href="/product/{{tshirt.slug}}?size={{size.size}}" class="btn {% if active_size.size == size.size  %}
+                            btn-dark
+                            {% else %}
+                            btn-light
+                            {% endif %}">{{size.size}}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-4">
+                        <h2><span class="badge rounded-pill bg-success mt-4 mb-4">Save {{tshirt.discount}}%</span>
+                        </h2>
+                        <h3 class="text-danger"><del>₹ {{price}}</del></h3>
+                        <h3><span>₹ {{sale_price}}</span></h3>
+                    </div>  
+                                        
+                </div>     
+                <a href="/addtocart/{{tshirt.slug}}/{{active_size.size}}?return_url={{request.get_full_path}} " class="btn btn-outline-success">Add To Cart</a>
+                &nbsp;    
+            <div>
+        </div>
+    </div>
+ </div>
+
+
+{% endblock %}

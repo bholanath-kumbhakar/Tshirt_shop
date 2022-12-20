@@ -1,0 +1,59 @@
+{% extends  "store/base.html" %}
+{% load tshirt_tags %}
+{% block content %}
+
+
+<div class="container" style="margin-top: 50px;">
+    <div class="display-4 mb-4">Your Order Summery</div><hr>
+    <table class="table">
+        <thead>
+            <tr style="background-color: rgb(234, 234, 136);">
+                <th>sl.</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{order.date|date}}</td>
+                <td>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Image</th>
+                                <th>Tshirt</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in order.orderitem_set.all %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td><img  height="60px" class="border" src="{{i.tshirt.image.url}}" alt=""></td>
+                                <td>{{i.tshirt.name}}</td>
+                                <td>₹ {{i.price }}</td>
+                                <td>{{i.quantity}}</td>
+                               <td>₹ {% multiply i.quantity i.price %}</td>                               
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    {% if order.order_status == "COMPLETED" %}
+                    <span class="badge rounded-pill bg-success">{{order.order_status}}</span>
+                    {% else %}
+                    <span class="badge rounded-pill bg-warning">{{order.order_status}}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

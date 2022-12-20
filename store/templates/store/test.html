@@ -1,0 +1,38 @@
+{% extends "store/base.html" %}
+{% load tshirt_tags %}
+<style>
+  .div1{
+    width:250px;
+    height:500px;    
+    overflow:hidden;
+
+  }
+  .img{
+    position:absolute;
+
+  }
+</style>
+{% block content %}
+<div class="container">
+  <div class="row">
+    {% for tshirt in tshirts %}
+    <div class="col-4 mt-3 ">
+      <div class="card h-100" style="width: 18rem; align-items: center;">
+        <div class="div1">
+          <img src="{{tshirt.image.url}}" class=" img">
+        </div>        
+        <div class="card-body">
+          <h5 class="card-title" style="text-align:center ;">{{tshirt.name}}
+          </h5>
+          <span class="text-danger"><del>₹-{% min_price tshirt %}}</del></span>
+          &nbsp;
+          <span>₹-{% sale_price tshirt %}</span>
+          <span class="badge bg-info" style="margin-left: 80px;">Save {{tshirt.discount}}%</span>
+        </div>
+        <a href="" class=" btn btn-light ">See More</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

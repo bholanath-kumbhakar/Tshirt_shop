@@ -1,0 +1,17 @@
+{% extends  "store/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-lg-4 mx-auto border rounded p-3 mt-4">
+    <form action="/login/" method="POST">
+        {% csrf_token %}
+        <h1 class="display-4">Login Here</h1>
+        <hr><br>
+        {{ form |crispy }} <br>
+        <div class="for-groupe">
+            <input type="submit" class="btn btn-info" value="Login">
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
